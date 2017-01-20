@@ -20,10 +20,15 @@ This project does that for you.
 Installation
 ------------
 
-Setup a new Mixfile at `~/.myex/mix.exs`:
+Download the installer:
 
 ```
 mix archive.install https://github.com/christhekeele/myex/raw/master/myex.ez
+```
+
+Run the installer to put a `mix.exs` in `$MYEX_DIR` (default: `~/.myex`).
+
+```
 mix myex.install
 ```
 
@@ -43,7 +48,7 @@ it to `myex`. For example:
 ```sh
 $ myex mix deps.get
 $ myex
-Running MyEx: iex -S mix...
+Running in ~/.myex: iex -S mix...
 Eshell V8.2  (abort with ^G)
 ```
 

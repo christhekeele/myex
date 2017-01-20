@@ -4,13 +4,13 @@ defmodule MyEx do
   """
 
   @doc """
-  Executes commands within `~/.myexs`.
+  Executes commands within `$MYEX_DIR` (default: `~/.myex`).
 
   If no options are given, will start an `iex` session there.
   """
   def main([]), do: main(["iex", "-S", "mix"])
   def main([cmd | args]) do
-    IO.puts("Running MyEx: #{cmd} #{args |> Enum.join(" ")}...")
+    IO.puts("Running in #{project_dir()}: #{cmd} #{args |> Enum.join(" ")}...")
     System.cmd(cmd, args,
       cd: project_dir(),
       stderr_to_stdout: true,
@@ -19,7 +19,7 @@ defmodule MyEx do
   end
 
   def project_dir() do
-    System.user_home! |> Path.join(".myex")
+    System.get_env("MYEX_DIR") || System.user_home! |> Path.join(".myex")
   end
 end
 
@@ -34,7 +34,7 @@ defmodule Mix.Tasks.Myex.Install do
   import MyEx, only: [project_dir: 0]
 
   @doc """
-  Ensures a `mix.exs` file exists under `~/.myexs`.
+  Ensures a `mix.exs` file exists into `$MYEX_DIR` (default: `~/.myex`).
 
   Uses `MyEx`'s `Mixfile` and prompts on overwrite.
   """
